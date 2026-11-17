@@ -27,6 +27,18 @@ document.addEventListener('play', ({ target }) => {
   document.querySelectorAll('.sheet video').forEach((video) => { if (video !== target) video.pause(); });
 }, true);
 
+// The cover reel: where autoplay is refused (iOS Low Power Mode, some in-app browsers) it starts on the
+// first touch. With reduced motion no source matches, currentSrc stays empty and the reel stays off.
+const reel = document.querySelector('.cover__media video');
+if (reel) {
+  const start = () => { if (reel.paused && reel.currentSrc) reel.play().catch(() => {}); };
+  const kinds = ['pointerup', 'touchend', 'click', 'keydown'];
+  const first = () => { start(); kinds.forEach((kind) => document.removeEventListener(kind, first)); };
+  start();
+  kinds.forEach((kind) => document.addEventListener(kind, first, { passive: true }));
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') start(); });
+}
+
 // The fixed capsule gets .is-aside while any heading is in the band it covers (the top of the screen down
 // to just under it); styles.css moves it out of view there, below 60rem only.
 // ponytail: the band is measured once at load; recompute on resize if a rotated phone ever needs it
