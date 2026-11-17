@@ -1,34 +1,49 @@
-// Fills each media slot with the file named in data-src, if that file exists.
-// Until then the slot keeps showing its placeholder label.
-// Cover tiles are decorative copies: their videos play muted and looped, without
-// controls, and stay on the first frame when the visitor prefers reduced motion.
+// Fills each media slot with the file named in data-src, if that file exists;
+// until then the slot keeps showing its placeholder label.
+// Videos play muted and looped only while they are on screen;
+// with reduced motion they stay on their first frame (section videos get controls).
+// A slot may name a wide file (data-src-wide) for landscape screens.
+// Blocks marked .reveal fade in once as they come into view.
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const landscape = matchMedia('(min-aspect-ratio: 1/1)').matches;
+
+const playWhenSeen = new IntersectionObserver((entries) => {
+  entries.forEach(({ target, isIntersecting }) => {
+    if (isIntersecting) target.play().catch(() => {});
+    else target.pause();
+  });
+}, { threshold: 0.2 });
 
 document.querySelectorAll('[data-src]').forEach((slot) => {
-  const src = slot.dataset.src;
+  const src = (landscape && slot.dataset.srcWide) || slot.dataset.src;
   const isVideo = /\.(mp4|webm|mov)$/i.test(src);
-  const isTile = slot.classList.contains('tile');
   const media = document.createElement(isVideo ? 'video' : 'img');
 
   if (isVideo) {
     media.playsInline = true;
+    media.muted = true;
+    media.loop = true;
     media.preload = 'metadata';
-    if (isTile) {
-      media.muted = true;
-      media.loop = true;
-      media.autoplay = !still;
-    } else {
-      media.controls = true;
-    }
+    media.controls = still && !slot.classList.contains('tile');
   } else {
     media.alt = slot.dataset.alt || '';
+    media.decoding = 'async';
   }
 
-  media.addEventListener(isVideo ? 'loadedmetadata' : 'load', () => {
+  media.addEventListener(isVideo ? 'loadeddata' : 'load', () => {
     slot.replaceChildren(media);
     slot.classList.add('is-filled');
-    if (media.autoplay) media.play().catch(() => {});
-  });
-  // #t=0.1 makes a tile show its first frame as the poster until it plays
-  media.src = isTile && isVideo ? `${src}#t=0.1` : src;
+    if (isVideo && !still) playWhenSeen.observe(media);
+  }, { once: true });
+  // #t=0.1 shows the first frame until the video plays
+  media.src = isVideo ? `${src}#t=0.1` : src;
 });
+
+const reveal = new IntersectionObserver((entries) => {
+  entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    target.classList.add('is-in');
+    reveal.unobserve(target);
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => reveal.observe(el));
