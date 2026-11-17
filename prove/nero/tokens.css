@@ -1,0 +1,80 @@
+/* Tokens · cinema trial t1 "Nero caldo" (17.11.2026, local only)
+ * One continuous espresso page with paper type. The pictures are the only colour;
+ * powder blue appears only in hairlines and small labels. No tomato, no colour bands.
+ * styles.css references these by name only.
+ */
+:root {
+  /* Colour · the three brand colours, then the roles they play here */
+  --color-paper:  oklch(97% 0.011 90);     /* Paper White #F8F5ED */
+  --color-ink:    oklch(28.8% 0.027 49);   /* Espresso #36271F */
+  --color-accent: oklch(88.2% 0.023 222);  /* Powder Blue #C9DCE3 */
+
+  --color-bg:          var(--color-ink);                  /* the one surface */
+  --color-text:        var(--color-paper);
+  --color-muted:       oklch(80% 0.015 80);               /* secondary text */
+  --color-label:       var(--color-accent);               /* small labels */
+  --color-rule:        oklch(88.2% 0.023 222 / 0.2);      /* hairlines */
+  --color-rule-strong: oklch(88.2% 0.023 222 / 0.45);     /* chips, underlines */
+  --color-btn-line:    oklch(88.2% 0.023 222 / 0.55);     /* pill outline */
+  --color-slot:        oklch(32% 0.027 49);               /* empty media slot */
+  --color-focus:       var(--color-accent);
+
+  --space-section: clamp(5rem, 2rem + 8vw, 10rem);
+
+  /* Type · the site's three faces: Bricolage Grotesque, Instrument Sans, Instrument Serif italic for the tagline only */
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-accent:  "Instrument Serif", Georgia, serif;
+  --weight-display: 500;   /* large and calm: size carries the hierarchy, not weight */
+
+  --text-xs:      0.8125rem;
+  --text-sm:      0.9375rem;
+  --text-md:      1.0625rem;
+  --text-lg:      clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem);
+  --text-xl:      clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  --text-2xl:     clamp(2.25rem, 1.3rem + 3.4vw, 4.5rem);
+  --text-3xl:     clamp(2.5rem, 1rem + 4.4vw, 5.5rem);
+  --text-display: clamp(3rem, 0.5rem + 7.4vw, 9rem);
+  --text-number:  clamp(5rem, 2rem + 9vw, 11rem);
+
+  /* Space · 4pt scale, with two wide steps for the margins */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+  --space-5xl: 12rem;
+
+  --page-max:    78rem;
+  --page-gutter: clamp(1.5rem, 6vw, 7rem);
+  --page-edge:   max(var(--page-gutter), (100% - var(--page-max)) / 2);
+  --size-tap:        2.75rem;
+  --size-tap-coarse: 3rem;
+
+  /* Shape · media almost square-cornered like film frames; pills only for what you press */
+  --radius-media: 3px;
+  --radius-pill:  999px;
+  --rule-hair:    1px;
+  --rule-focus:   2px;
+  --mask-fade:    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+
+  /* Motion · slow and soft */
+  --ease:          cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-zoom:     cubic-bezier(0.45, 0, 0.55, 1);
+  --dur-short:     400ms;
+  --dur-slow:      1600ms;
+  --dur-reveal:    1600ms;
+  --dur-enter:     2000ms;
+  --dur-stagger:   300ms;
+  --dur-zoom:      26s;
+  --dur-drift:     140s;
+  --dur-drift-alt: 170s;
+  --rise:          1.5rem;
+  --zoom:          1.08;
+  --zoom-hover:    1.04;
+}
