@@ -1,35 +1,39 @@
 /* Tokens · alinacreates.online
  * Source of truth for every colour, font, size, space, radius and timing.
  * styles.css references these by name only. Change a value here, never inline.
- * The three brand colours are fixed (see design.md); the rest is derived from them.
+ * The three brand colours are fixed (see design.md); tomato is the one accent on top of them,
+ * on trial since 17.11.2026; the rest is derived from them.
  */
 :root {
   /* Colour */
-  --color-paper:         oklch(97% 0.011 90);     /* Paper White #F8F5ED · page base */
-  --color-paper-2:       oklch(98.6% 0.006 90);   /* sheet inside a folder */
-  --color-ink:           oklch(28.8% 0.027 49);   /* Espresso #36271F · text, primary button */
-  --color-ink-2:         oklch(45% 0.024 49);     /* secondary text, placeholders */
-  --color-ink-hover:     oklch(37% 0.03 49);      /* primary button on hover */
-  --color-rule:          oklch(86% 0.014 75);     /* hairlines on paper */
-  --color-accent:        oklch(88.2% 0.023 222);  /* Powder Blue #C9DCE3 · tabs and folders */
-  --color-accent-2:      oklch(93.5% 0.014 222);  /* empty media slot */
+  --color-paper:         oklch(97% 0.011 90);     /* Paper White #F8F5ED · paper bands */
+  --color-paper-2:       oklch(98.6% 0.006 90);   /* filled slot, empty slot on blue, portrait tile */
+  --color-ink:           oklch(28.8% 0.027 49);   /* Espresso #36271F · text, espresso bands */
+  --color-ink-2:         oklch(45% 0.024 49);     /* secondary text on paper and blue */
+  --color-rule:          oklch(86% 0.014 75);     /* hairlines on paper, sand tile */
+  --color-accent:        oklch(88.2% 0.023 222);  /* Powder Blue #C9DCE3 · blue bands */
+  --color-accent-2:      oklch(93.5% 0.014 222);  /* empty media slot, button hover */
   --color-accent-ink:    oklch(28.8% 0.027 49);   /* text on powder blue */
-  --color-focus:         oklch(28.8% 0.027 49);   /* focus ring on paper */
+  --color-focus:         oklch(28.8% 0.027 49);   /* focus ring on paper and blue */
   --color-focus-inverse: oklch(88.2% 0.023 222);  /* focus ring on espresso */
   --color-paper-muted:   oklch(80% 0.015 80);     /* secondary text on espresso */
   --color-rule-inverse:  oklch(40% 0.025 49);     /* hairlines on espresso */
+  --color-hot:           oklch(54% 0.177 37);     /* Tomato #BF3A0B · primary button, Kontakt pill, the two numbers */
+  --color-hot-hover:     oklch(47% 0.153 37);     /* darker tomato #9E2F08 · hover of the two tomato pills */
 
   /* Type · two faces plus one accent */
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-body:    "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --font-accent:  "Instrument Serif", Georgia, serif;   /* italic, tagline only */
 
+  --text-xs:        0.75rem;
   --text-sm:        0.875rem;
   --text-md:        1.0625rem;
   --text-lg:        clamp(1.1875rem, 1.05rem + 0.6vw, 1.375rem);
+  --text-xl:        clamp(1.5rem, 1.05rem + 1.5vw, 2.25rem);
   --text-2xl:       clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
-  --text-display-s: clamp(2.75rem, 1.5rem + 5vw, 5rem);
-  --text-display:   clamp(3.25rem, 1.2rem + 10vw, 8.5rem);
+  --text-display-s: clamp(3.5rem, 1.5rem + 6vw, 7rem);
+  --text-display:   clamp(3.25rem, 0.5rem + 7vw, 8rem);
 
   /* Space · 4pt scale */
   --space-3xs: 0.125rem;
@@ -41,25 +45,26 @@
   --space-xl:  2.5rem;
   --space-2xl: 4rem;
   --space-3xl: 6rem;
-  --space-4xl: 9rem;
 
   --page-max:    72rem;
   --page-gutter: clamp(1rem, 4vw, 3rem);
+  --page-edge:   max(var(--page-gutter), (100% - var(--page-max)) / 2);  /* the left edge every band shares */
+  --hero-height: min(100svh, 56rem);
+  --size-tap:        2.75rem;
+  --size-tap-coarse: 3rem;
 
   /* Shape */
   --radius-sm:   6px;
   --radius-md:   14px;
-  --radius-lg:   24px;
   --radius-pill: 999px;
   --rule-hair:   1px;
-  --rule-strong: 2px;
   --rule-focus:  2px;
+  --mask-fade:   linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
 
   /* Motion */
-  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-micro:   120ms;
-  --dur-short:   220ms;
-  --dur-long:    420ms;
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-micro:     120ms;
+  --dur-short:     220ms;
+  --dur-drift:     48s;
+  --dur-drift-alt: 60s;
 }
