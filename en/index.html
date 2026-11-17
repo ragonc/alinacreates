@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://alinacreates.online/en/">
   <meta property="og:title" content="Alina Tamara Karbe · Social Media Marketing & Content Creator">
   <meta property="og:description" content="Portfolio of Alina Tamara Karbe. Social media marketing and content creation, from idea to reel.">
-  <meta property="og:image" content="https://alinacreates.online/media/cover-wide.jpg">
+  <meta property="og:image" content="https://alinacreates.online/media/hero-reel-wide.jpg">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -41,10 +41,18 @@
 
     <!-- HERO -->
     <section class="cover">
-      <picture class="cover__media">
-        <source media="(min-aspect-ratio: 1/1)" srcset="../media/cover-wide.jpg">
-        <img src="../media/cover-standin.jpg" alt="" fetchpriority="high">
-      </picture>
+      <!-- The reel: one file per load, picked once by the screen's shape (three columns on landscape screens).
+           With reduced motion no source matches, so only the poster shows and no video is requested -->
+      <div class="cover__media" aria-hidden="true">
+        <picture>
+          <source media="(min-aspect-ratio: 1/1)" srcset="../media/hero-reel-wide.jpg">
+          <img src="../media/hero-reel.jpg" alt="" fetchpriority="high">
+        </picture>
+        <video autoplay muted loop playsinline disablepictureinpicture>
+          <source src="../media/hero-reel-wide.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (min-aspect-ratio: 1/1)">
+          <source src="../media/hero-reel.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)">
+        </video>
+      </div>
       <div class="cover__veil" aria-hidden="true"></div>
       <h1>Alina&nbsp;T. Karbe</h1>
       <div class="hero__meta">
@@ -251,7 +259,7 @@
     <!-- Contact -->
     <section class="sect contact" id="kontakt">
       <div class="wrap contact__inner">
-        <h2>Contact</h2>
+        <h2>Let's work together</h2>
         <a class="contact__mail" href="mailto:a.karbe07@gmail.com">a.karbe07@gmail.com</a>
         <ul class="contact__links">
           <li><a class="btn" href="https://ch.linkedin.com/in/alina-tamara-karbe" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
@@ -272,6 +280,6 @@
   </footer>
 
   <script src="../script.js"></script>
-  <p class="mock">Mockup · placeholders: tall cover, images under UGC</p>
+  <p class="mock">Mockup · placeholders: images under UGC</p>
 </body>
 </html>

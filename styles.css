@@ -398,9 +398,17 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   background: var(--color-ink);
 }
 .cover__media, .cover__veil { position: absolute; inset: 0; }
-.cover__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+/* The poster under the reel, framed the same, so the first frame lands on it */
+.cover__media img, .cover__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The veil is darkest in a band as tall as the text (seam, name, lines, button), so the name stays above 7:1 on any
+ * frame of the reel; above the band it opens up over a fixed height. Phones stack the text, so their band is taller */
 .cover__veil {
-  background: linear-gradient(to top, var(--color-veil-deep) 0%, var(--color-veil-mid) 55%, var(--color-veil-top) 100%);
+  --veil-band: calc(var(--seam) + 20rem);
+  background: linear-gradient(to top, var(--color-veil-deep) 0, var(--color-veil-text) var(--veil-band),
+    var(--color-veil-mid) calc(var(--veil-band) + 12rem), var(--color-veil-top) 100%);
+}
+@media (min-width: 60rem) {
+  .cover__veil { --veil-band: calc(var(--seam) + 13rem); }
 }
 .cover h1, .cover .hero__meta { position: relative; }
 .cover .hero__meta { margin-top: var(--space-xl); }

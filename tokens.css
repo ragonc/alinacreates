@@ -22,6 +22,7 @@
 
   /* The cover's own roles, on the veil */
   --color-veil-deep:   oklch(22% 0.022 49 / 0.9);
+  --color-veil-text:   oklch(22% 0.022 49 / 0.78);   /* the least it is under the cover's text: paper on pure white behind it stays above 7:1 */
   --color-veil-mid:    oklch(22% 0.022 49 / 0.5);
   --color-veil-top:    oklch(22% 0.022 49 / 0.6);
   --color-muted-veil:  oklch(88% 0.012 80);
