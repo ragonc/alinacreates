@@ -82,3 +82,8 @@
   --rise:          1.5rem;
   --drift:         -10%;    /* how far the cover picture rises while the paper covers it */
 }
+
+/* Phones · sections closer: no dead screen between blocks (Carmine, 17.11.2026) */
+@media (max-width: 47.99rem) {
+  :root { --space-section: var(--space-xl); }
+}
