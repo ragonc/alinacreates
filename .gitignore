@@ -1,0 +1,10 @@
+.DS_Store
+
+# Project notes and tooling stay local: the repo is public and holds only the site
+CLAUDE.md
+alinacreates.md
+design.md
+README.md
+docs/
+scripts/
+.hallmark/
