@@ -28,7 +28,6 @@
   --color-muted-veil:  oklch(88% 0.012 80);
   --color-line-veil:   oklch(97% 0.011 90 / 0.55);
   --color-paper-clear: oklch(97% 0.011 90 / 0);           /* the paper at zero, for the seam */
-  --color-badge:       oklch(28.8% 0.027 49 / 0.85);        /* the Mockup badge, while stand-in media remain */
   --color-bar:         oklch(28.8% 0.027 49 / 0.85);        /* the fixed capsule: DE / EN and Kontakt */
 
   --space-section: clamp(4rem, 1.5rem + 6vw, 7.5rem);

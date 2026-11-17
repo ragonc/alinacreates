@@ -26,3 +26,14 @@ document.querySelectorAll('.seq').forEach((group) => seen.observe(group));
 document.addEventListener('play', ({ target }) => {
   document.querySelectorAll('.sheet video').forEach((video) => { if (video !== target) video.pause(); });
 }, true);
+
+// The fixed capsule gets .is-aside while any heading is in the band it covers (the top of the screen down
+// to just under it); styles.css moves it out of view there, below 60rem only.
+// ponytail: the band is measured once at load; recompute on resize if a rotated phone ever needs it
+const bar = document.querySelector('.bar');
+const under = new Set();
+const band = new IntersectionObserver((entries) => {
+  entries.forEach(({ target, isIntersecting }) => under[isIntersecting ? 'add' : 'delete'](target));
+  bar.classList.toggle('is-aside', under.size > 0);
+}, { rootMargin: `0px 0px ${Math.round(bar.getBoundingClientRect().bottom + 8 - innerHeight)}px 0px` });
+document.querySelectorAll('.sheet h2, .sheet h3').forEach((heading) => band.observe(heading));

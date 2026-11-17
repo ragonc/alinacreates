@@ -158,6 +158,13 @@ h3, caption {
 /* A case's facts under its text and media; wide blocks take both columns */
 .facts { margin-top: var(--space-2xl); }
 .facts__wide { grid-column: 1 / -1; }
+/* From 80rem Open Hub Day is two screens: the results start one of their own, as far below the media
+ * as one section is from the next, under a tab that names the case again. Below 80rem one flow, no tab */
+.facts__tab { display: none; }
+@media (min-width: 80rem) {
+  .facts { margin-top: calc(2 * var(--space-section)); }
+  .facts__tab { display: block; grid-column: 1 / -1; margin-bottom: calc(var(--space-lg) - var(--space-2xl)); }
+}
 
 .case__tab {
   font-size: var(--text-sm);
@@ -444,6 +451,14 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 60rem) {
   .bar { top: var(--space-lg); right: var(--page-edge); }
 }
+/* Below 60rem the capsule steps up out of view while a heading passes under it (script.js), so it never
+ * sits on one; keyboard focus keeps it in place. Reduced motion: it goes and comes back without sliding */
+@media (max-width: 59.99rem) {
+  .bar.is-aside:not(:focus-within) { transform: translateY(calc(-100% - var(--space-sm))); visibility: hidden; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar { transition: transform var(--dur-short) var(--ease), visibility var(--dur-short); }
+}
 
 /* Skip link · hidden until the keyboard reaches it, then a capsule at the top left */
 .skip { position: fixed; top: var(--space-sm); left: var(--page-gutter); z-index: 3; background: var(--color-bar); }
@@ -526,18 +541,8 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   .btn:active { transform: none; }
 }
 
-/* Mockup badge · stays while stand-in media remain */
-.mock {
-  position: fixed;
-  left: var(--space-sm);
-  bottom: var(--space-sm);
-  z-index: 99;
-  padding: var(--space-2xs) var(--space-sm);
-  border-radius: var(--radius-pill);
-  background: var(--color-badge);
-  color: var(--color-paper);
-  font: 500 var(--text-xs) / 1.2 var(--font-body);
-}
+/* Mockup line · above the stand-in images at UGC, in the flow, while they remain */
+.mock { font: 500 var(--text-xs) / 1.2 var(--font-body); color: var(--color-label); }
 
 /* ---- Phones · one rhythm, a step tighter: --space-md inside a block, --space-lg between blocks,
  * --space-section (--space-xl here) around each section. Laptop spacing is untouched ---- */
