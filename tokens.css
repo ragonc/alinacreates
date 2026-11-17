@@ -28,8 +28,9 @@
   --color-line-veil:   oklch(97% 0.011 90 / 0.55);
   --color-paper-clear: oklch(97% 0.011 90 / 0);           /* the paper at zero, for the seam */
   --color-badge:       oklch(28.8% 0.027 49 / 0.85);        /* the Mockup badge, while stand-in media remain */
+  --color-bar:         oklch(28.8% 0.027 49 / 0.85);        /* the fixed capsule: DE / EN and Kontakt */
 
-  --space-section: clamp(7rem, 3rem + 11vw, 15rem);
+  --space-section: clamp(4rem, 1.5rem + 6vw, 7.5rem);
   --seam:          clamp(3rem, 9svh, 6rem);                /* how tall the dissolve into paper is */
 
   /* Type · the site's three faces: Bricolage Grotesque, Instrument Sans, Instrument Serif italic for the tagline only */
@@ -46,7 +47,6 @@
   --text-2xl:     clamp(2.25rem, 1.3rem + 3.4vw, 4.5rem);
   --text-3xl:     clamp(2.5rem, 1rem + 4.4vw, 5.5rem);
   --text-display: clamp(3rem, 0.5rem + 7.4vw, 9rem);
-  --text-number:  clamp(5rem, 2rem + 9vw, 11rem);
 
   /* Space · 4pt scale, with two wide steps for the margins */
   --space-3xs: 0.125rem;
@@ -72,20 +72,13 @@
   --radius-pill:  999px;
   --rule-hair:    1px;
   --rule-focus:   2px;
-  --mask-fade:    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
 
-  /* Motion · slow and soft */
+  /* Motion · three gestures: the name wipes in, the ads enter in turn, the cover drifts under the paper */
   --ease:          cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-zoom:     cubic-bezier(0.45, 0, 0.55, 1);
   --dur-short:     400ms;
-  --dur-slow:      1600ms;
-  --dur-reveal:    1600ms;
-  --dur-enter:     2000ms;
+  --dur-reveal:    1000ms;
+  --dur-enter:     1600ms;
   --dur-stagger:   300ms;
-  --dur-zoom:      26s;
-  --dur-drift:     140s;
-  --dur-drift-alt: 170s;
   --rise:          1.5rem;
-  --zoom:          1.08;
-  --zoom-hover:    1.04;
+  --drift:         -10%;    /* how far the cover picture rises while the paper covers it */
 }

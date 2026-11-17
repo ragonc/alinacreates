@@ -81,15 +81,6 @@ h3 {
 
 .sect { padding-block: var(--space-section); }
 
-/* Soft entrance · each block fades up once as it comes into view */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(var(--rise));
-  transition: opacity var(--dur-reveal) var(--ease), transform var(--dur-reveal) var(--ease);
-}
-.js .reveal.is-in { opacity: 1; transform: none; }
-.js .reveal--late { transition-delay: var(--dur-stagger); }
-
 /* Buttons · hairline pills */
 
 .btn {
@@ -119,7 +110,7 @@ h3 {
   .btn { min-height: var(--size-tap-coarse); }
 }
 
-/* Cover text, shared by the three covers */
+/* Cover text */
 
 .hero__meta { display: grid; justify-items: start; }
 .hero__role { font-size: var(--text-md); line-height: 1.4; color: var(--color-muted); }
@@ -133,59 +124,16 @@ h3 {
 }
 .hero__meta .btn { margin-top: var(--space-xl); }
 
-/* Cover entrance · the name, then the lines under it, slowly */
-@media (prefers-reduced-motion: no-preference) {
-  .hero h1, .cover h1 { animation: rise var(--dur-enter) var(--ease) both; }
-  .hero__meta { animation: rise var(--dur-enter) var(--ease) var(--dur-stagger) both; }
-}
-@keyframes rise { from { opacity: 0; transform: translateY(var(--rise)); } }
-
-/* Media slots · show the expected file name until the file exists */
+/* Media · film frames that keep their own ratio; the picture fills, controls stay in view */
 
 .media { min-width: 0; }
-
 .slot {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
   overflow: hidden;
   border-radius: var(--radius-media);
   background: var(--color-slot);
-  color: var(--color-muted);
-  text-align: center;
 }
-.slot img, .slot video { width: 100%; height: 100%; object-fit: cover; }
-
-.slot__label {
-  display: grid;
-  gap: var(--space-2xs);
-  padding: var(--space-sm);
-  font-size: var(--text-xs);
-  line-height: 1.35;
-}
-.slot__label small { font-size: 1em; overflow-wrap: anywhere; }
-
-/* Stand-in stills where a video will go · a slow push-in, each slot out of step */
-@media (prefers-reduced-motion: no-preference) {
-  .ads .slot img,
-  .media-row .slot img,
-  .cover__media .slot img {
-    animation: push var(--dur-zoom) var(--ease-zoom) infinite alternate;
-  }
-  .ads > :nth-child(2) img, .media-row > :nth-child(2) img { animation-delay: calc(var(--dur-zoom) / -3); }
-  .ads > :nth-child(3) img, .media-row > :nth-child(3) img { animation-delay: calc(var(--dur-zoom) / -1.5); }
-}
-@keyframes push { from { transform: scale(1); } to { transform: scale(var(--zoom)); } }
-
-/* Marks content that Alina still has to supply */
-.todo {
-  color: var(--color-muted);
-  font-weight: 400;
-  text-decoration: underline dashed var(--color-rule-strong);
-  text-decoration-thickness: var(--rule-hair);
-  text-underline-offset: 0.25em;
-}
+.slot img, .slot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* Section patterns · text beside media, or stacked */
 
@@ -196,7 +144,7 @@ h3 {
 @media (min-width: 60rem) {
   .split {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--space-4xl);
+    gap: var(--space-3xl);
     align-items: center;
   }
   .split--rev { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
@@ -236,36 +184,24 @@ h3 {
 .rows dd { font-size: var(--text-sm); color: var(--color-muted); }
 ul.rows { grid-template-columns: minmax(0, 1fr); }
 
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
-.chips li {
-  padding: var(--space-2xs) var(--space-md);
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 0 0 var(--rule-hair) var(--color-rule-strong);
-  font-size: var(--text-sm);
-}
+/* Numbers · her two numbers, once, in the Impact Hub case */
 
-/* Numbers · her two numbers, once, large and light */
-
-.strip__source { font-size: var(--text-sm); font-weight: 500; color: var(--color-label); }
 .stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, max-content);
   gap: var(--space-xl);
-  margin-top: var(--space-xl);
+  margin-top: var(--space-sm);
 }
 .stat__num {
   font-family: var(--font-display);
-  font-size: var(--text-number);
+  font-size: var(--text-3xl);
   font-weight: 200;
-  line-height: 0.88;
-  letter-spacing: -0.06em;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
 }
-.stat__label { margin-top: var(--space-md); font-size: var(--text-md); font-weight: 500; }
+.stat__label { margin-top: var(--space-xs); font-size: var(--text-md); font-weight: 500; }
 .stat__note { margin-top: var(--space-3xs); font-size: var(--text-sm); color: var(--color-muted); }
-@media (min-width: 60rem) {
-  .stats { grid-template-columns: repeat(2, max-content); gap: var(--space-5xl); }
-}
 
 /* Über mich · her first sentence set large */
 
@@ -283,101 +219,53 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   color: var(--color-text);
 }
 @media (min-width: 60rem) {
-  .about { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-4xl); }
+  .about { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-3xl); }
 }
 
-/* Ausgewählte Projekte · two cards that jump to their case */
+/* Media groups · on phones a sideways swipe out to the screen edge, the next picture peeking in */
 
-.projects { display: grid; gap: var(--space-3xl); }
-.folder {
-  display: grid;
-  gap: var(--space-xs);
-  text-decoration: none;
-}
-.folder .slot { aspect-ratio: 4 / 3; }
-.folder .slot img { transition: transform var(--dur-slow) var(--ease); }
-.folder__name {
-  margin-top: var(--space-sm);
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-.folder__more { font-size: var(--text-sm); color: var(--color-muted); white-space: nowrap; }
-
-@media (hover: hover) and (pointer: fine) {
-  .folder:hover .slot img { transform: scale(var(--zoom-hover)); }
-  .folder:hover .folder__more { color: var(--color-text); }
-}
-@media (min-width: 40rem) {
-  .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xl); align-items: start; }
-  .folder:nth-child(2) { margin-top: var(--space-4xl); }
-}
-
-/* TINGS · three 9:16 ads stepping down */
-
-.ads {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-sm);
-  align-items: start;
-}
-.ads .slot { aspect-ratio: 9 / 16; }
-.ads > :nth-child(2) { margin-top: var(--space-xl); }
-.ads > :nth-child(3) { margin-top: var(--space-2xl); }
-@media (min-width: 60rem) {
-  .ads { gap: var(--space-lg); }
-  .ads > :nth-child(2) { margin-top: var(--space-3xl); }
-  .ads > :nth-child(3) { margin-top: var(--space-5xl); }
-}
-
-/* Impact Hub · one large visual beside two small ones */
-
-.visuals {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: var(--space-md);
-}
-.visuals .slot { aspect-ratio: 4 / 5; }
-.visuals .media:first-child { grid-row: span 2; }
-.visuals .media:first-child .slot { height: 100%; aspect-ratio: auto; }
-
-/* Clips and UGC · three 9:16 pictures: a swipe row on phones, a row from 40rem */
-
-.media-row {
+.ads, .visuals, .band, .media-row {
   display: flex;
   gap: var(--space-md);
-  padding-bottom: var(--space-sm);
+  margin-inline: calc(-1 * var(--page-gutter));
+  padding: 0 var(--page-gutter) var(--space-sm);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--page-gutter);
 }
-.media-row > .media { flex: 0 0 68%; scroll-snap-align: start; }
-.media-row .slot { aspect-ratio: 9 / 16; }
+:is(.ads, .visuals, .band, .media-row) > .media { flex: 0 0 68%; scroll-snap-align: start; }
+:is(.ads, .visuals, .band, .media-row) .slot { aspect-ratio: 9 / 16; }
 
 @media (min-width: 40rem) {
-  .media-row {
+  .ads, .visuals, .band, .media-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding-bottom: 0;
+    margin-inline: 0;
+    padding: 0;
     overflow: visible;
   }
-}
-/* Vor der Kamera spans the page; the middle clip sits lower */
-@media (min-width: 60rem) {
-  .media-row--wide { gap: var(--space-xl); }
-  .media-row--wide > :nth-child(2) { margin-top: var(--space-4xl); }
-}
+  .media-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-.caption {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-2xs) var(--space-sm);
-  margin-top: var(--space-md);
-  font-size: var(--text-sm);
+  /* TINGS · one large ad at the outer edge, two small beside it */
+  .ads { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+  .ads > :first-child { grid-column: 2; grid-row: 1 / span 2; }
+
+  /* Impact Hub · one large visual at the outer edge, two small 4:5 beside it */
+  .visuals { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .visuals > :first-child { grid-row: span 2; }
+  .visuals .slot { aspect-ratio: 4 / 5; }
+
+  .ads > :first-child .slot,
+  .visuals > :first-child .slot { height: 100%; aspect-ratio: auto; }
+
+  /* Vor der Kamera · one band: three clips edge to edge */
+  .band {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--rule-hair);
+    overflow: hidden;
+    border-radius: var(--radius-media);
+  }
+  .band .slot { border-radius: 0; }
 }
-.caption dt { color: var(--color-label); }
-.caption dd { justify-self: start; }
 
 /* Kontakt · the address, large */
 
@@ -417,23 +305,20 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   .foot a:hover { color: var(--color-text); }
 }
 
-/* Reduced motion · nothing drifts, rises or zooms */
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; transition: none; }
-  .btn:active { transform: none; }
-  .folder .slot img { transition: none; }
-}
-
 /* ---- Curtain · cover: one full-bleed picture behind the name under a dark veil;
  * it stays in place while the paper page slides over it like a curtain ---- */
 
-.cover {
+/* The cover and the fixed bar speak on the veil: paper text, powder-blue focus */
+.cover, .bar {
   --color-text:     var(--color-paper);
   --color-bg:       var(--color-ink);
   --color-muted:    var(--color-muted-veil);
   --color-btn-line: var(--color-line-veil);
   --color-focus:    var(--color-accent);
+  color: var(--color-text);
+}
 
+.cover {
   position: sticky;
   top: 0;
   z-index: 0;
@@ -443,24 +328,42 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   overflow: hidden;
   padding: var(--space-3xl) var(--page-gutter) calc(var(--seam) + var(--space-lg));
   background: var(--color-ink);
-  color: var(--color-text);
 }
 .cover__media, .cover__veil { position: absolute; inset: 0; }
-.cover__media .slot { height: 100%; border-radius: 0; background: var(--color-ink); }
-.cover__media img { object-position: 50% 40%; }
+.cover__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .cover__veil {
   background: linear-gradient(to top, var(--color-veil-deep) 0%, var(--color-veil-mid) 55%, var(--color-veil-top) 100%);
 }
+.cover h1, .cover .hero__meta { position: relative; }
+.cover .hero__meta { margin-top: var(--space-xl); }
 
-/* Top bar · the DE / EN switch beside the Kontakt pill */
-.hero__bar {
-  position: absolute;
-  top: var(--space-lg);
+/* From 60rem the lines sit right of the name, on one bottom row: the name stays low, clear of the picture's middle */
+@media (min-width: 60rem) {
+  .cover {
+    grid-template-columns: max-content minmax(0, max-content);
+    justify-content: space-between;
+    align-items: end;
+    column-gap: var(--space-xl);
+    padding-inline: var(--page-edge);
+  }
+  .cover .hero__meta { margin-top: 0; }
+}
+
+/* Fixed bar · the DE / EN switch beside the Kontakt pill, in one espresso capsule */
+.bar {
+  position: fixed;
+  top: var(--space-sm);
   right: var(--page-gutter);
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-2xs);
+  padding: var(--space-3xs) var(--space-3xs) var(--space-3xs) var(--space-xs);
+  border-radius: var(--radius-pill);
+  background: var(--color-bar);
+}
+@media (min-width: 60rem) {
+  .bar { top: var(--space-lg); right: var(--page-edge); }
 }
 .lang { display: flex; align-items: center; font-size: var(--text-sm); font-weight: 500; letter-spacing: 0.04em; white-space: nowrap; }
 .lang a {
@@ -472,6 +375,8 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   text-decoration: none;
   transition: color var(--dur-short) var(--ease);
 }
+/* The ring stays inside the link, clear of the slash and the pill */
+.lang a:focus-visible { outline-offset: calc(-1 * var(--rule-focus)); }
 .lang a[aria-current="page"] {
   color: var(--color-text);
   text-decoration: underline;
@@ -485,12 +390,6 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 @media (pointer: coarse) {
   .lang a { min-height: var(--size-tap-coarse); }
 }
-.cover h1, .cover .hero__meta { position: relative; }
-.cover .hero__meta { margin-top: var(--space-xl); }
-
-@media (min-width: 60rem) {
-  .cover { padding-inline: var(--page-edge); }
-}
 
 /* The paper page: above the cover, its top edge a soft dissolve instead of a cut */
 .sheet { position: relative; z-index: 1; background: var(--color-bg); }
@@ -502,6 +401,43 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   height: var(--seam);
   background: linear-gradient(to bottom, var(--color-paper-clear), var(--color-bg));
   pointer-events: none;
+}
+
+/* ---- Motion · three gestures, each tied to what it shows; none with reduced motion ---- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 1 · Her name is wiped in from below, once; then the lines under it rise */
+  .cover h1 { animation: unveil var(--dur-enter) var(--ease) backwards; }
+  .hero__meta { animation: rise var(--dur-enter) var(--ease) var(--dur-stagger) backwards; }
+
+  /* 2 · The TINGS ads enter one after another, the way they ran */
+  .js .seq > * {
+    opacity: 0;
+    transform: translateY(var(--rise));
+    transition: opacity var(--dur-reveal) var(--ease), transform var(--dur-reveal) var(--ease);
+  }
+  .js .seq.is-in > * { opacity: 1; transform: none; }
+  .js .seq > :nth-child(2) { transition-delay: var(--dur-stagger); }
+  .js .seq > :nth-child(3) { transition-delay: calc(2 * var(--dur-stagger)); }
+
+  /* 3 · The cover picture drifts up while the paper slides over it (where scroll timelines exist) */
+  @supports (animation-timeline: scroll()) {
+    .cover__media {
+      animation: drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
+  }
+}
+@keyframes unveil {
+  from { clip-path: inset(100% -0.2em -0.2em -0.2em); }
+  to   { clip-path: inset(-0.2em); }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(var(--rise)); } }
+@keyframes drift { to { transform: translateY(var(--drift)); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active { transform: none; }
 }
 
 /* Mockup badge · stays while stand-in media remain */
