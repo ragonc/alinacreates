@@ -246,8 +246,9 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 .block > .table { margin-top: var(--space-sm); }
 
 /* Open Hub Day from 80rem: one grid of four columns. The figures take a quarter each and the text
- * blocks a half each, with the same gap, so they share lines; the table's three figures sit on the
- * last three quarters, its two label columns share the first; the Follow up keeps the half measure.
+ * blocks a half each, with the same gap, so they share lines; a table's first two columns share the
+ * first quarter and its other columns share the last three equally (the e-mail's three rates land on
+ * the quarters, the paid ads' four figures do not); the Follow up text keeps the half measure.
  * The table is one gap wider than its block, so plain percentages land on those lines (cells take no
  * calc() widths); the extra gap is only the last column's empty end, clipped */
 @media (min-width: 80rem) {
@@ -255,7 +256,6 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   .block:has(> .table) { overflow-x: clip; }
   .table { width: calc(100% + var(--space-3xl)); }
   .table thead > tr > :nth-child(-n+2) { width: 12.5%; }
-  .table thead > tr > :nth-child(n+3) { width: 25%; }
   .facts__wide > p { max-width: calc((100% - var(--space-3xl)) / 2); }
 }
 
