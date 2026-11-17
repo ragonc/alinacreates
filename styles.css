@@ -140,13 +140,19 @@ h3, caption {
 
 .split, .stack, .facts, .cv { display: grid; gap: var(--space-2xl) var(--space-3xl); }
 .split__text { display: grid; gap: var(--space-lg); align-content: start; min-width: 0; }
+.split__head { display: contents; }
 
-/* Text beside text from 48rem; text beside three media from 80rem, where each picture is still a useful size */
+/* Text beside text from 48rem */
 @media (min-width: 48rem) {
   .facts, .cv { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* From 80rem the text sits above and its three media below, in one row across the column: equal,
+ * at most --media-max tall, centred as a group. A case's text is two equal halves with their tops
+ * aligned, the heading lines left and her part right */
 @media (min-width: 80rem) {
-  .split { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
+  .split__text:has(> .split__head) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-3xl); }
+  .split__head { display: grid; gap: var(--space-lg); align-content: start; }
+  .split__text > .block { margin-top: 0; }
 }
 
 /* A case's facts under its text and media; wide blocks take both columns */
@@ -232,6 +238,20 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 .table td { font-weight: 400; }
 .block > .table { margin-top: var(--space-sm); }
 
+/* Open Hub Day from 80rem: one grid of four columns. The figures take a quarter each and the text
+ * blocks a half each, with the same gap, so they share lines; the table's three figures sit on the
+ * last three quarters, its two label columns share the first; the Follow up keeps the half measure.
+ * The table is one gap wider than its block, so plain percentages land on those lines (cells take no
+ * calc() widths); the extra gap is only the last column's empty end, clipped */
+@media (min-width: 80rem) {
+  .stats { column-gap: var(--space-3xl); }
+  .block:has(> .table) { overflow-x: clip; }
+  .table { width: calc(100% + var(--space-3xl)); }
+  .table thead > tr > :nth-child(-n+2) { width: 12.5%; }
+  .table thead > tr > :nth-child(n+3) { width: 25%; }
+  .facts__wide > p { max-width: calc((100% - var(--space-3xl)) / 2); }
+}
+
 @media (max-width: 47.99rem) {
   .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .table, .table caption, .table tbody, .table tr, .table th, .table td { display: block; }
@@ -274,8 +294,9 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   letter-spacing: -0.025em;
   color: var(--color-text);
 }
+/* From 80rem one column in the middle, as wide as a half, so nothing beside it stands empty */
 @media (min-width: 80rem) {
-  .about { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3xl); }
+  .about { grid-template-columns: minmax(0, calc((100% - var(--space-3xl)) / 2)); justify-content: center; }
 }
 
 /* Media groups · on phones a sideways swipe out to the screen edge, the next picture peeking in;
@@ -304,6 +325,10 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
     overflow: visible;
   }
 }
+/* From 80rem: each frame at most --media-max tall, the row centred in the column */
+@media (min-width: 80rem) {
+  .media-row { grid-template-columns: repeat(3, minmax(0, calc(var(--media-max) * 9 / 16))); justify-content: center; }
+}
 
 /* Kontakt · the address, large */
 
@@ -326,6 +351,11 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
   .contact__mail:hover { text-decoration-color: currentColor; }
 }
 .contact__links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); color: var(--color-muted); }
+/* From 80rem centred, like Über mich: no empty half */
+@media (min-width: 80rem) {
+  .contact__inner { justify-items: center; text-align: center; }
+  .contact__links { justify-content: center; }
+}
 
 /* Footer · one line */
 
@@ -346,8 +376,8 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 /* ---- Curtain · cover: one full-bleed picture behind the name under a dark veil;
  * it stays in place while the paper page slides over it like a curtain ---- */
 
-/* The cover and the fixed bar speak on the veil: paper text, powder-blue focus */
-.cover, .bar {
+/* The cover, the fixed bar and the skip link speak on the veil: paper text, powder-blue focus */
+.cover, .bar, .skip {
   --color-text:     var(--color-paper);
   --color-bg:       var(--color-ink);
   --color-muted:    var(--color-muted-veil);
@@ -405,6 +435,13 @@ ul.rows { grid-template-columns: minmax(0, 1fr); }
 }
 @media (min-width: 60rem) {
   .bar { top: var(--space-lg); right: var(--page-edge); }
+}
+
+/* Skip link · hidden until the keyboard reaches it, then a capsule at the top left */
+.skip { position: fixed; top: var(--space-sm); left: var(--page-gutter); z-index: 3; background: var(--color-bar); }
+.skip:not(:focus) { clip-path: inset(50%); }
+@media (min-width: 60rem) {
+  .skip { top: var(--space-lg); left: var(--page-edge); }
 }
 .lang { display: flex; align-items: center; font-size: var(--text-sm); font-weight: 500; letter-spacing: 0.04em; white-space: nowrap; }
 .lang a {

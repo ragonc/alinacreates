@@ -20,3 +20,8 @@ document.querySelectorAll('[role="group"]').forEach((group) => near.observe(grou
 
 const seen = once((group) => group.classList.add('is-in'), { threshold: 0.2 });
 document.querySelectorAll('.seq').forEach((group) => seen.observe(group));
+
+// One video at a time: starting one pauses the others ('play' does not bubble, so listen in capture)
+document.addEventListener('play', ({ target }) => {
+  document.querySelectorAll('video').forEach((video) => { if (video !== target) video.pause(); });
+}, true);

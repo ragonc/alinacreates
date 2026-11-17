@@ -64,6 +64,7 @@
   --page-max:    78rem;
   --page-gutter: clamp(1.5rem, 6vw, 7rem);
   --page-edge:   max(var(--page-gutter), (100% - var(--page-max)) / 2);
+  --media-max:   72svh;   /* from 80rem a row of three media is at most this tall */
   --size-tap:        2.75rem;
   --size-tap-coarse: 3rem;
 
